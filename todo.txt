@@ -1,1 +1,1 @@
-Create Maven Project and make JUnit test cases
+make JUnit test cases
