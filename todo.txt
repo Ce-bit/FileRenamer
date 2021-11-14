@@ -1,0 +1,2 @@
+1. Read CSV Data into CorrectNames
+2. Modify Renamers to read files and rename using fucntions in Oldfile
