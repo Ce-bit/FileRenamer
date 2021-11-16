@@ -17,6 +17,7 @@ public class CorrectNameTest
         bob = new CorrectName("Bob Flounder", "999999");
     }
 
+    //Test getFullName()
     @Test
     public void testGetFullName() {
         //System.out.println("getFullName"); 
@@ -25,6 +26,7 @@ public class CorrectNameTest
         assertEquals(expResult, result);
     }
 
+    //Test getCCC()
     @Test
     public void testGetCCC() {
         //System.out.println("getCCC"); 
@@ -33,6 +35,7 @@ public class CorrectNameTest
         assertEquals(expResult, result);
     }
 
+    //Test correctedFilename()
     @Test
     public void testGetCorrectedFileName() {
         //System.out.println

@@ -71,12 +71,9 @@ public class FileFixer {
             File newName = new File(ofiles.getParent() + separator + new_file);
             oldName.renameTo(newName);
 
-            try {
-                //can be changed to Files.copy() to keep old files
-                Files.move(Paths.get(newName.getPath()), Paths.get(path_to_output + separator + newName.getName()), StandardCopyOption.REPLACE_EXISTING);
-            } catch (IOException x) {
-                throw new IOException(x);
-            }
+                //copy renamed file to /renamedFiles
+                oFile.copyFile(Paths.get(newName.getPath()), Paths.get(path_to_output + separator + newName.getName()), StandardCopyOption.REPLACE_EXISTING);
         }
     }
 }
+

@@ -2,32 +2,61 @@ package com.school.renamer;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import java.io.File;
-import java.util.ArrayList;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import org.junit.jupiter.api.BeforeEach;
 
 
 public class OldFileTest 
 {
-    private OldFile bobFile;
-    ArrayList<CorrectName> names = new ArrayList<>();
+    OldFile bobFile;
+    File srcFile;
+    String output_folder = "src/test/java/com/school/renamer/output/";
+    
 
     public OldFileTest(){
     }
 
     @BeforeEach
-    public void initializeOldFileObjects() {
-        File srcFile = new File("1234567890-123456_Bob_Flounder_999999_bla bla.pdf");
+    public void initializeOldFileObjects() throws IOException {
+        Files.createDirectories(Paths.get(output_folder));
+        srcFile = new File("1234567890-123456_Bob_Flounder_999999_bla bla.pdf");
         bobFile = new OldFile(srcFile);
     }
 
+    //Creates a folder /TestFolder at workspace root, creates txt file, then copyFile() into a new folder "/output"
+    @Test
+    public void testCopyFile() throws IOException {
+        File folder = new File("TestFolder");
+        folder.mkdir();
+        System.out.println(folder.getAbsolutePath());
+        File testFile = new File(folder, "testFile.txt");
+        testFile.createNewFile();
+        System.out.println("Copying file to /output...");   
+        bobFile.copyFile(Paths.get(testFile.getPath()), Paths.get(output_folder + testFile.getName()), StandardCopyOption.REPLACE_EXISTING);
+        int exist = 0;
+        if (testFile.exists()) {
+            exist = 1;
+            System.out.println("Success"); 
+        }
+        else {
+            System.out.println("Fail"); 
+        }
+        int expResult = 1;
+        assertEquals(expResult, exist);
+    }
+
+    //Test for getID()
     @Test
     public void testGetID() {
-        //System.out.println("getFullName"); 
         String expResult = "999999";
         String result = bobFile.getID(bobFile.getOname());
         assertEquals(expResult, result);
     }
 
+    //Test for getCSV()
     @Test
     public void testGetCSV() {      
         CorrectName bob = new CorrectName("Bob Flounder", "999999");
@@ -40,9 +69,9 @@ public class OldFileTest
         assertEquals(expResult, result);
     }
 
+    //Test for correctFile()
     @Test
     public void testCorrectFile() {
-        //System.out.println("getCCC"); 
         String expResult = bobFile.getCSV(bobFile.oldName) + bobFile.oldName;
         String result = bobFile.correctFile();
         assertEquals(expResult, result);
