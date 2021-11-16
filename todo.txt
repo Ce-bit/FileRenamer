@@ -1,2 +1,7 @@
-Produce a list of missing submission files based on csv student list
+Solutions should be able to detect and respond to the following cases:
+(i) 49 names in CSV, 49 PDFs to rename, all valid (student found & .PDF ) -> rename 49
+(ii) 49 names in CSV, 0 PDFs to rename -> list 49 missing submissions
+(iii) 49 names in CSV, 49 PDFs to rename, 30 valid -> rename 30, flag 19 problem submissions for review
+(iv) 49 names in CSV, 30 PDFs to rename, 30 valid -> rename 30, list 19 missing submissions
+(v)49 names in CSV, 49 PDFs to rename, all invalid ->  flag 49 problem submissions to review
 
