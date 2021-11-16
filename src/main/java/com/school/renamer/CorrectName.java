@@ -1,6 +1,7 @@
 package com.school.renamer;
 public class CorrectName {
     String fullName, CCC;
+    boolean found = false;
 
     public CorrectName(String Name, String CCC) {
         this.fullName = Name;
@@ -13,6 +14,10 @@ public class CorrectName {
 
     public String getCCC() {
         return CCC;
+    }
+
+    public boolean isFound(){
+        return found;
     }
 
     public String correctedFileName() {

@@ -6,14 +6,19 @@ import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Scanner;  
 import java.io.IOException;
+import java.io.FileWriter;
 
 
 public class FileFixer {
     public static void main(String[] argv) throws IOException {
+        int flags = 0, renamed = 0, missing = 0;
         String separator = System.getProperty( "file.separator" );
         String extension = "";
         String identifier = "";
         String whole_name = "";
+
+        //FileWriter for storing missing submissions in a txt file located at project root
+        FileWriter myWriter = new FileWriter("MissingList.txt");
         ArrayList<CorrectName> csvEntries = new ArrayList<>();
         ArrayList<File> old_files = new ArrayList<>();
         
@@ -51,29 +56,93 @@ public class FileFixer {
                     }    
                 }
                 //if file is PDF, copy all file names to old_files
-                else {
+                else if (extension.equals("pdf")){
                     old_files.add(file);
-                } 
+                }
+                //any other file type...
+                else {
+                    System.out.println("Flagged invalid submission:" + file.getName());
+                    flags++;
+                }
             }
         }
         
         //traverse copied old_files ArrayList, 
-        //create OldFile objects, 
+        //create OldFile objects for each file in old_files, 
         //create new names for files using methods from OldFile, 
         //rename files using the created names and renamteTo(),
         //move renamed files into newlty created renamedFiles folder
         Files.createDirectories(Paths.get(path_to_output));
-        for (File ofiles : old_files) {
-            OldFile oFile = new OldFile(ofiles);
-            oFile.correctNames.addAll(csvEntries);
-            String new_file = oFile.correctFile();
-            File oldName = new File(ofiles.getPath());
-            File newName = new File(ofiles.getParent() + separator + new_file);
-            oldName.renameTo(newName);
 
-                //copy renamed file to /renamedFiles
-                oFile.copyFile(Paths.get(newName.getPath()), Paths.get(path_to_output + separator + newName.getName()), StandardCopyOption.REPLACE_EXISTING);
+        //Process pdf files
+        if (!old_files.isEmpty()) {
+            for (File ofiles : old_files) {
+                OldFile oFile = new OldFile(ofiles);
+
+                //Process valid submissions
+                if (!oFile.getID(oFile.getOname()).equals("nomatch")) {
+                    oFile.correctNames.addAll(csvEntries);
+                    String new_file = oFile.correctFile();
+
+                    //Check for missing submissions and flag their names
+                    for (CorrectName nameChecks : csvEntries) {
+                        if (new_file.contains(nameChecks.getFullName())) {
+                            nameChecks.found = true;
+                        }
+                    }
+
+                    //rename valid submissions
+                    File oldName = new File(ofiles.getPath());
+                    File newName = new File(ofiles.getParent() + separator + new_file);
+                    oldName.renameTo(newName);
+                    renamed++;
+
+                    //copy renamed file to /renamedFiles
+                    oFile.copyFile(Paths.get(newName.getPath()), Paths.get(path_to_output + separator + newName.getName()), StandardCopyOption.REPLACE_EXISTING);
+                }
+
+                //Print invalid submission flags
+                else {
+                    System.out.println("Flagged invalid sumbission: " + ofiles.getName());
+                    flags++;
+                }   
+            }
+            //If some pdfs are missing, store all the missing names in MissingList.txt
+            try {  
+                for (CorrectName names : csvEntries) {
+                    if (names.found == false) {
+                        missing++;
+                        myWriter.write("Missing submission file for " + names.getFullName() + "\n");
+                        System.out.println("Successfully wrote to the Missing list.");   
+                    } 
+                }
+                myWriter.close();
+              } catch (IOException e) {
+                System.out.println("An error occurred.");
+                e.printStackTrace();
+              }
+
         }
+        //If all submissions are missing, store all the missing names in MissingList.txt
+        else {
+            for (CorrectName names : csvEntries) {
+                missing++;
+                myWriter.write("Missing submission file for " + names.getFullName() + "\n");
+                System.out.println("Successfully wrote to the Missing list.");  
+            }
+             
+        }
+
+        //Report the issues that FileFixer fixed
+        if (flags > 0) {
+            System.out.println("Invalid submissions: " + flags);
+        }
+        if (renamed > 0) {
+            System.out.println("Renamed submissions: " + renamed);
+        }
+        if (missing > 0) {
+            System.out.println("Missing submissions: " + missing);
+        }      
     }
 }
 

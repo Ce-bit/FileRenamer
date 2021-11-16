@@ -35,13 +35,16 @@ public class OldFile implements FileOps{
     }
 
     public String getID(final String oldName) {
-        String[] my_token = oldName.split("_", 2);
-        final Pattern p = Pattern.compile("(\\d{6})");
-        final Matcher m = p.matcher(my_token[1]);
+
+        //Check that valid submissions contain "_6-digitID_" string
+        final Pattern p = Pattern.compile("(_\\d{6}_)");
+        final Matcher m = p.matcher(oldName);
         if (m.find()) {
-            return m.group(0);
+            return m.group(0).replaceAll("_", "");
         }
-        return "";
+        else {
+            return "nomatch";
+        }
     }
 
     public String getCSV(String oldName) {
