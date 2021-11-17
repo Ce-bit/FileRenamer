@@ -17,7 +17,7 @@ public class CorrectName {
 
     public String correctedFileName() {
         String fileName = "";
-        fileName = fileName + fullName + "_" + CCC + "assignsubmission_file_";
+        fileName = fileName + fullName + "_" + CCC + "_assignsubmission_file_";
         return fileName;
     }
 }

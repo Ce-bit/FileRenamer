@@ -9,15 +9,27 @@ public class OldFile {
     private List<CorrectName> correctNames = new ArrayList<>();
 
     public OldFile(File srcFile) {
-        this.oldName = srcFile.getName();
+         this.oldName = srcFile.getName();
+    }
+
+    public void addName(CorrectName name){
+        correctNames.add(name);
     }
 
     public String getID(final String oldName) {
-        final Pattern p = Pattern.compile("(\\d{6})");
-        final Matcher m = p.matcher(oldName);
-        if (m.find()) {
-            return m.group(0);
+        String[] values = oldName.split("_");
+        for(CorrectName n: correctNames){
+            for(int i=0;i<values.length;i++){
+                if(n.getCCC().equals(values[i])){
+                    return values[i];
+                }
+            }
         }
+        // final Pattern p = Pattern.compile("(\\d{6})");
+        // final Matcher m = p.matcher(oldName);
+        // if (m.find()) {
+        //     return m.group(0);
+        // }
         return "";
     }
 
