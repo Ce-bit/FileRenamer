@@ -1,46 +1,41 @@
 package com.school.renamer;
-
+import org.junit.jupiter.api.BeforeEach; //previously Before
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.BeforeEach;
 
 
-public class CorrectNameTest 
-{
-    private CorrectName bob;
+public class CorrectNameTest {
+    private CorrectName student;
 
     public CorrectNameTest(){
-    }
 
+    }
     @BeforeEach
-    public void initializeCorrectNameObjects() {
-        bob = new CorrectName("Bob Flounder", "999999");
+    public void setup(){
+        student = new CorrectName("John Doe", "111111");
     }
 
-    //Test getFullName()
     @Test
-    public void testGetFullName() {
-        //System.out.println("getFullName"); 
-        String expResult = "Bob Flounder";
-        String result = bob.getFullName();
-        assertEquals(expResult, result);
+    public void testGetFullName(){
+        String expectedName = "John Doe";
+        String result = student.getFullName();
+        assertEquals(expectedName, result);
     }
 
-    //Test getCCC()
     @Test
-    public void testGetCCC() {
-        //System.out.println("getCCC"); 
-        String expResult = "999999";
-        String result = bob.getCCC();
-        assertEquals(expResult, result);
+    public void testGetCCC(){
+        String expected_value = "111111";
+        String result = student.getCCC();
+        assertEquals(expected_value, result);
     }
 
-    //Test correctedFilename()
     @Test
-    public void testGetCorrectedFileName() {
-        //System.out.println
-        String expResult = bob.getFullName() + "_" + bob.getCCC() + "_" + "assignsubmission_file_";
-        String result = bob.correctedFileName();
-        assertEquals(expResult, result);
+    public void testCorrectedFileName(){
+        String expected_value = student.getFullName() + "_" + student.getCCC() + "_assignsubmission_file_";
+        String result = student.correctedFileName();
+        assertEquals(expected_value, result); 
     }
+
+
+    
 }
