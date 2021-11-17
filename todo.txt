@@ -1,1 +1,1 @@
-For the best grade we gotta remove code smells and show clear application of design patterns
+
