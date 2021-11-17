@@ -1,1 +1,2 @@
-Fix issue: Renames old file and appends corrected renamed file name to old file then copies (results in a windows directory limit upon mutiple runs)
+make JUnit test cases
+find some way to implement Files.java interface( or remove it)
