@@ -3,8 +3,8 @@ public class CorrectName {
     String fullName, CCC;
     boolean found = false;
 
-    public CorrectName(String Name, String CCC) {
-        this.fullName = Name;
+    public CorrectName(String fullName, String CCC) {
+        this.fullName = fullName;
         this.CCC = CCC;
     }
 
