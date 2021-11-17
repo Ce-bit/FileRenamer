@@ -56,6 +56,14 @@ public class OldFileTest
         assertEquals(expResult, result);
     }
 
+    //Test getID() for No Macth
+    @Test
+    public void testGetID_No_Match() {
+        String expResult = "nomatch";
+        String result = bobFile.getID("456789");
+        assertEquals(expResult, result);
+    }
+
     //Test for getCSV()
     @Test
     public void testGetCSV() {      
@@ -68,6 +76,15 @@ public class OldFileTest
         String result = bobFile.getCSV(bobFile.oldName);
         assertEquals(expResult, result);
     }
+
+    //Test for getCSV() for ID not Found
+    @Test
+    public void testGetCSV_ID_NOT_FOUND(){
+        String expected_value = "ID NOT FOUND!";
+        String actual_value = bobFile.getCSV(bobFile.oldName);
+        assertEquals(expected_value, actual_value);
+    }
+
 
     //Test for correctFile()
     @Test
