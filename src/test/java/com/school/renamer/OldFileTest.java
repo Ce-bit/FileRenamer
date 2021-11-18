@@ -67,4 +67,28 @@ public class OldFileTest {
         String result = bobFile.correctFile();
         assertEquals(expResult, result);
     }
+    
+    //Creates a folder /TestFolder at workspace root, creates txt file, then CopyFile into a new folder "/output"
+    @Test
+    public void testCopyFile() throws IOException {
+        File folder = new File("TestFolder");
+        folder.mkdir();
+        System.out.println(folder.getAbsolutePath());
+        File testFile = new File(folder, "testFile.txt");
+        testFile.createNewFile();
+        System.out.println("Copying file to /output..."); 
+        CopyFile copyFile = new CopyFile();  
+        FileOps copycommand = new CopyFileCommand(copyFile, Paths.get(testFile.getPath()), Paths.get(output_folder + testFile.getName()), StandardCopyOption.REPLACE_EXISTING);
+        copycommand.execute();
+        int exist = 0;
+        if (testFile.exists()) {
+            exist = 1;
+            System.out.println("Success"); 
+        }
+        else {
+            System.out.println("Fail"); 
+        }
+        int expResult = 1;
+        assertEquals(expResult, exist);
+    }
 }
