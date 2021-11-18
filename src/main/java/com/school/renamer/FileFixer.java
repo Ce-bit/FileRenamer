@@ -35,6 +35,7 @@ public class FileFixer {
         File[] arrayFile = myFolder.listFiles();
         for (File file : arrayFile) {
             if (file.isFile()) {
+                FileOps commands = new ReadFileCommand(file, csvEntries);
                 //get full filename
                 String longFileName = file.getName();
 
@@ -46,17 +47,7 @@ public class FileFixer {
 
                 //if file is a CSV, extract CorrectName objects
                 if (extension.equals("csv")) {
-                    Scanner sc = new Scanner(new File(file.getPath()));
-                    sc.useDelimiter(",");
-                    String skipHeader = sc.nextLine();
-                    while (sc.hasNext()) {  
-                        identifier = sc.next();
-                        identifier = identifier.replaceAll("\\D+","");
-                        wholeName = sc.next();
-                        CorrectName csvEntry = new CorrectName(wholeName, identifier);
-                        csvEntries.add(csvEntry);                       
-                        String skipTheRest = sc.nextLine();
-                    }    
+                    commands.execute();    
                 }
                 //if file is PDF, copy all file names to oldFiles
                 else if (extension.equals("pdf")){
@@ -94,7 +85,9 @@ public class FileFixer {
                     renamed++;
 
                     //copy renamed file to /renamedFiles
-                    oFile.copyFile(Paths.get(ofiles.getPath()), Paths.get(adjOutputPath + separator + newName.getName()), StandardCopyOption.REPLACE_EXISTING);
+                    CopyFile copyFile = new CopyFile();
+                    FileOps copycommand = new CopyFileCommand(copyFile, Paths.get(ofiles.getPath()), Paths.get(adjOutputPath + separator + newName.getName()), StandardCopyOption.REPLACE_EXISTING);
+                    copycommand.execute();
                 }
 
                 //Print invalid submission flags

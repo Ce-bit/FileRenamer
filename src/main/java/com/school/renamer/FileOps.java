@@ -1,7 +1,8 @@
 package com.school.renamer;
-import java.nio.file.CopyOption;
-import java.nio.file.Path;
+
+import java.io.File;
+import java.util.List;
 
 public interface FileOps {
-    public void copyFile(Path srcFile, Path destFile, CopyOption option);
+    public void execute();
 }
