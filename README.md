@@ -21,6 +21,7 @@ This Project implements the Factory and Command design patterns.
              - renamer
                - FileFixer.java
 3. This is the runner class, to execute run this class.
+4. Before executing the files to be renamed should be placed in filesToRename folder located here.
 
 ## *Using Tests*
 Using VS Code, The test suite will be located on the left bar, run the provided tests here. For modification of the test cases navigate to
