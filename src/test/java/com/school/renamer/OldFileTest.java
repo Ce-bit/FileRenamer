@@ -1,22 +1,19 @@
 package com.school.renamer;
+
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import org.junit.jupiter.api.BeforeEach;
 
-
-public class OldFileTest 
-{
+public class OldFileTest {
     OldFile bobFile;
     File srcFile;
     String output_folder = "src/test/java/com/school/renamer/output/";
-    
 
-    public OldFileTest(){
+    public OldFileTest() {
     }
 
     @BeforeEach
@@ -26,29 +23,7 @@ public class OldFileTest
         bobFile = new OldFile(srcFile);
     }
 
-    //Creates a folder /TestFolder at workspace root, creates txt file, then copyFile() into a new folder "/output"
-    @Test
-    public void testCopyFile() throws IOException {
-        File folder = new File("TestFolder");
-        folder.mkdir();
-        System.out.println(folder.getAbsolutePath());
-        File testFile = new File(folder, "testFile.txt");
-        testFile.createNewFile();
-        System.out.println("Copying file to /output...");   
-        bobFile.copyFile(Paths.get(testFile.getPath()), Paths.get(output_folder + testFile.getName()), StandardCopyOption.REPLACE_EXISTING);
-        int exist = 0;
-        if (testFile.exists()) {
-            exist = 1;
-            System.out.println("Success"); 
-        }
-        else {
-            System.out.println("Fail"); 
-        }
-        int expResult = 1;
-        assertEquals(expResult, exist);
-    }
-
-    //Test for getID()
+    // Test for getID()
     @Test
     public void testGetID() {
         String expResult = "999999";
@@ -56,7 +31,7 @@ public class OldFileTest
         assertEquals(expResult, result);
     }
 
-    //Test getID() for No Macth
+    // Test getID() for No Macth
     @Test
     public void testGetID_No_Match() {
         String expResult = "nomatch";
@@ -64,9 +39,9 @@ public class OldFileTest
         assertEquals(expResult, result);
     }
 
-    //Test for getCSV()
+    // Test for getCSV()
     @Test
-    public void testGetCSV() {      
+    public void testGetCSV() {
         CorrectName bob = new CorrectName("Bob Flounder", "999999");
         CorrectName frank = new CorrectName("Frank Jameson", "888888");
         bobFile.correctNames.add(bob);
@@ -77,16 +52,15 @@ public class OldFileTest
         assertEquals(expResult, result);
     }
 
-    //Test for getCSV() for ID not Found
+    // Test for getCSV() for ID not Found
     @Test
-    public void testGetCSV_ID_NOT_FOUND(){
+    public void testGetCSV_ID_NOT_FOUND() {
         String expected_value = "ID NOT FOUND!";
         String actual_value = bobFile.getCSV(bobFile.oldName);
         assertEquals(expected_value, actual_value);
     }
 
-
-    //Test for correctFile()
+    // Test for correctFile()
     @Test
     public void testCorrectFile() {
         String expResult = bobFile.getCSV(bobFile.oldName) + bobFile.oldName;
