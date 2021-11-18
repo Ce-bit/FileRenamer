@@ -1,5 +1,5 @@
 # FileRenamer
-Simple java program to rename files based on csv
+Simple java program to rename files based on csv.
 This Project implements the Factory and Command design patterns.
 
 ## Developed by:           
