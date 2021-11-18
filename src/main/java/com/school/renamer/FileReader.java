@@ -13,14 +13,15 @@ public class FileReader {
 
         Scanner sc = new Scanner(new File(csvFile.getPath()));
         sc.useDelimiter(",");
-
+        String skipHeader = sc.nextLine();
         while (sc.hasNext()) {
             identifier = sc.next();
             identifier = identifier.replaceAll("\\D+", "");
             fullName = sc.next();
             CorrectName csvEntry = new CorrectName(fullName, identifier);
+            String skipTheRest = sc.nextLine();
             csvList.add(csvEntry);
-
+            
         }
     }
 
