@@ -9,8 +9,22 @@
   <version>1.0-SNAPSHOT</version>
 
   <name>renaming</name>
-  <!-- FIXME change it to the project's website -->
-  <url>http://www.example.com</url>
+  <description>School assignment</description>
+  <url>https://github.com/Ce-bit/FileRenamer</url>
+
+  <licenses>
+    <license>
+      <name>Apache License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+
+  <scm>
+    <connection>https://github.com/Ce-bit/FileRenamer.git</connection>
+    <developerConnection>https://github.com/Ce-bit/FileRenamer.git</developerConnection>
+    <url>https://github.com/Ce-bit/FileRenamer</url>
+  </scm>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -25,13 +39,44 @@
       <version>5.4.2</version>
       <scope>test</scope>
     </dependency>
+
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-params</artifactId>
       <version>5.4.2</version>
       <scope>test</scope>
     </dependency>
+
+    <dependency>
+    <groupId>sonia.scm.clients</groupId>
+    <artifactId>scm-client-api</artifactId>
+    <version>1.60</version>
+  </dependency>
+
+  <dependency>
+    <groupId>sonia.scm.clients</groupId>
+    <artifactId>scm-client-impl</artifactId>
+    <version>1.60</version>
+  </dependency>
   </dependencies>
+
+  <repositories>
+    <repository>
+      <id>packages.scm-manager.org</id>
+      <name>scm-manager public repository</name>
+      <url>https://packages.scm-manager.org/repository/public</url>
+    </repository>
+  </repositories>
+
+  <reporting>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>3.3.1</version>
+      </plugin>
+    </plugins>
+  </reporting>
 
   <build>
     <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
