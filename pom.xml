@@ -12,6 +12,13 @@
   <description>School assignment</description>
   <url>https://github.com/Ce-bit/FileRenamer</url>
 
+  <distributionManagement>
+        <repository>
+            <id>public-repo</id>
+            <url>https://packages.scm-manager.org/repository/public</url>
+        </repository>
+  </distributionManagement>
+
   <licenses>
     <license>
       <name>Apache License, Version 2.0</name>
@@ -120,7 +127,38 @@
           <artifactId>maven-project-info-reports-plugin</artifactId>
           <version>3.0.0</version>
         </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-gpg-plugin</artifactId>
+          <executions>
+            <execution>
+              <id>sign-artifacts</id>
+      <phase>verify</phase>
+              <goals>
+                <goal>sign</goal>
+              </goals>
+            </execution>
+          </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <skipTests>true</skipTests>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>3.3.1</version>
+        <configuration>
+          ...
+        </configuration>
+      </plugin>
       </plugins>
+      
     </pluginManagement>
+
+    
   </build>
 </project>
